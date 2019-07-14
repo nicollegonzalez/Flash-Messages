@@ -9,6 +9,9 @@ const passport = require('passport');
 const ensureLogin = require("connect-ensure-login");
 
 
+
+
+
 router.get('/signup', (req, res, next)=>{
     res.render('user-views/signup');
 })
@@ -17,13 +20,15 @@ router.post('/signup', (req, res, next)=>{
 
     const thePassword = req.body.thePassword;
     const theUsername = req.body.theUsername;
+    const email       = req.body.theEmail
 
     const salt = bcrypt.genSaltSync(12);
     const hashedPassWord =  bcrypt.hashSync(thePassword, salt);
 
     User.create({
         username: theUsername,
-        password: hashedPassWord
+        password: hashedPassWord,
+        email: email
     })
     .then(()=>{
         console.log('yay created a new user');
